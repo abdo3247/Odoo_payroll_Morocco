@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+     <record id="hr_contract_view_form_l10n_hr_ma_payroll" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.l10n.hr_ma_payroll</field>
+            <field name="model">hr.contract</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+			<field name="arch" type="xml">
+			<data>
+			    <xpath expr="//field[@name='date_start']" position="attributes">
+                    <attribute name="date">
+
+                    </attribute>
+                </xpath>
+				<xpath expr="//field[@name='struct_id']" position="before">
+                    <field name="Avan_nature"/>
+                    <field name="Indemnite"/>
+                    <field name="Heures_mois"/>
+				</xpath>
+
+            </data>
+            </field>
+     </record>
+		
+	<!-- <record id="hr_payslip_form_l10n_ma_payroll" model="ir.ui.view">
+            <field name="name">hr.payslip.form.l10n.ma_payroll</field>
+            <field name="model">hr.payslip</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+            <data>
+                 <xpath expr="//field[@name='paid']" position="after">
+                     <field name="payment_mode"/>
+                 </xpath>
+            </data>
+            </field>
+     </record> -->
+		
+	 <record id="res_company_form_l10n_hr_ma_payroll" model="ir.ui.view">
+            <field name="name">res.company.form.l10n.hr_ma_payroll</field>
+            <field name="model">res.company</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+            <data>
+                <notebook>
+                    <page string=" Paramètres Paie" groups="base.group_hr_user">
+                       <group>
+                           <group string="CIMR" >
+                           <field name="is_CIMR_worker" />
+                           <field name="cimr_pat_worker" attrs="{'invisible':[('is_CIMR_worker','=',False)],'required':[('is_CIMR_worker','=',True)]}"  />
+                           <field name="cimr_sal_worker" attrs="{'invisible':[('is_CIMR_worker','=',False)],'required':[('is_CIMR_worker','=',True)]}"  />
+                           <field name="is_CIMR_employe" />
+                           <field name="cimr_pat_employe" attrs="{'invisible':[('is_CIMR_employe','=',False)],'required':[('is_CIMR_employe','=',True)]}"  />
+                           <field name="cimr_sal_employe" attrs="{'invisible':[('is_CIMR_employe','=',False)],'required':[('is_CIMR_employe','=',True)]}"  />
+                           <field name="is_CIMR_cadre" />
+                           <field name="cimr_pat_cadre" attrs="{'invisible':[('is_CIMR_cadre','=',False)],'required':[('is_CIMR_cadre','=',True)]}"  />
+                           <field name="cimr_sal_cadre" attrs="{'invisible':[('is_CIMR_cadre','=',False)],'required':[('is_CIMR_cadre','=',True)]}"  />
+                           </group>
+                           <newline/>
+                            <group string="Assurance coplementaire" >
+                            <field name="ass_comp" />
+                            <field name="ass_pat" attrs="{'invisible':[('ass_comp','=',False)],'required':[('ass_comp','=',True)]}"  />
+                            <field name="ass_sal" attrs="{'invisible':[('ass_comp','=',False)],'required':[('ass_comp','=',True)]}"  />
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+
+            </data>
+            </field>
+     </record>
+		
+	 <record id="hr_employee_form_l10n_hr_ma_payroll" model="ir.ui.view">
+            <field name="name">hr.employee.form.l10n.hr_ma_payroll</field>
+            <field name="model">hr.employee</field>
+            <field name="priority">30</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+	 		<notebook>
+				<page string=" Paramètres Paie" groups="base.group_hr_user">
+	            <group string="Numéros d'affiliation">
+                   <field name="cin"/>
+				   <field name="matricule_cnss"/>
+                   <field name="matricule_cimr"/>
+				   <field name="matricule_mut"/>
+                   <field name="anc"/>
+			    </group>
+				<group string="Avance, Prime, Retenue">
+                    <field name="Prime"/>
+                    <field name="AvaRet"/>
+                    <field name="Remboursement"/>
+	    		</group>
+				<group string=" Heures Sup et Absences ">
+			      	<field name="abs"/>
+                    <field name="hs25"/>
+				    <field name="hs50"/>
+					<field name="hs100"/>
+				</group>
+	            </page>
+            </notebook>
+		
+				
+			
+			</field>
+     </record>
+		
+	<report
+            auto="False"
+            header="False"
+            id="fiche_paye"
+            model="hr.payslip"
+            name="fiche.paye"
+            rml="l10n_hr_ma_payroll/report/payroll_slip.rml"
+            string="Fiche de Paie"
+    />
+<!--
+    <menuitem name="Info paie Societe" sequence="20"  parent="hr_payroll.menu_hr_payroll_root" id="Info_paie_societe" />
+
+    <record model="ir.ui.view" id="Info_paie_societe_form">
+      <field name="name">Info Societe form</field>
+      <field name="model">info.company</field>
+      <field name="arch" type="xml">
+        <form string="info compagny">
+          <sheet>
+            <group>
+              <field name="name_is"/>
+
+            </group>
+
+
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="Info_paie_societe_action">
+      <field name="name">info company</field>
+      <field name="res_model">info.company</field>
+      <field name="view_mode">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Click here To edit company data
+        </p>
+      </field>
+    </record>
+
+
+    <menuitem name="info details" parent="Info_paie_societe" id="Info_paie_societe_details" action="Info_paie_societe_action"/>
+    <record id="open_Info_paie_societe" model="ir.actions.act_window">
+        <field name="name"> Info </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+
+    </record> -->
+
+
+    </data>
+</openerp>
